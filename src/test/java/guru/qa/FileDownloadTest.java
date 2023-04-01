@@ -1,8 +1,6 @@
 package guru.qa;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.FileDownloadMode;
 import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,7 +29,7 @@ public class FileDownloadTest {
   @Test
   void uploadTest() throws Exception {
     Selenide.open("https://tus.io/demo.html");
-    $("input[type='file']").uploadFromClasspath("png-transparent-cat-animal-lovely-cat.png");
+    $("input[type='file']").uploadFromClasspath("qa/png-transparent-cat-animal-lovely-cat.png");
     $("#js-upload-container").shouldHave(Condition.text("The upload is complete!"));
   }
 }

@@ -9,10 +9,8 @@ import com.opencsv.CSVReader;
 import guru.qa.Human;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.csv.Csv;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
@@ -49,7 +47,7 @@ public class FileParsingTest {
 
   @Test
   void csvParseTest() throws Exception {
-    try (InputStream is = cl.getResourceAsStream("qaguru.csv");
+    try (InputStream is = cl.getResourceAsStream("qa/qaguru.csv");
          InputStreamReader isr = new InputStreamReader(is)) {
       CSVReader csvReader = new CSVReader(isr);
       List<String[]> content = csvReader.readAll();
@@ -61,8 +59,8 @@ public class FileParsingTest {
   void filesEqulsTest() throws Exception {
     Selenide.open("https://github.com/qa-guru/qa_guru_18_files/blob/master/src/test/resources/qaguru.csv");
     File download = $("#raw-url").download();
-    try (InputStream isExpected = cl.getResourceAsStream("expectedfiles/qaguru.csv");
-        InputStream downloaded = new FileInputStream(download)) {
+    try (InputStream isExpected = cl.getResourceAsStream("qa/expectedfiles/qaguru.csv");
+         InputStream downloaded = new FileInputStream(download)) {
       Assertions.assertEquals(
          Objects.hash(isExpected.readAllBytes()),
           Objects.hash( downloaded.readAllBytes())
@@ -72,7 +70,7 @@ public class FileParsingTest {
 
   @Test
   void zipTest() throws Exception {
-    try (InputStream is = cl.getResourceAsStream("sample.txt.zip");
+    try (InputStream is = cl.getResourceAsStream("qa/sample.txt.zip");
          ZipInputStream zs = new ZipInputStream(is)) {
       ZipEntry entry;
       while ((entry = zs.getNextEntry()) != null) {
@@ -84,7 +82,7 @@ public class FileParsingTest {
   @Test
   void jsonTest() throws Exception {
     Gson gson = new Gson();
-    try (InputStream is = cl.getResourceAsStream("human.json");
+    try (InputStream is = cl.getResourceAsStream("qa/human.json");
          InputStreamReader isr = new InputStreamReader(is)) {
       JsonObject jsonObject = gson.fromJson(isr, JsonObject.class);
 
@@ -96,7 +94,7 @@ public class FileParsingTest {
   @Test
   void jsonCleverTest() throws Exception {
     Gson gson = new Gson();
-    try (InputStream is = cl.getResourceAsStream("human.json");
+    try (InputStream is = cl.getResourceAsStream("qa/human.json");
          InputStreamReader isr = new InputStreamReader(is)) {
       Human human = gson.fromJson(isr, Human.class);
 
